@@ -20,7 +20,7 @@ class IPokemonTrainerFactoryTest {
 
     @Test
     void testCreateTrainer() {
-        String trainerName = "Ash";
+        String trainerName = "train";
         Team team = Team.MYSTIC;
 
         when(pokedexFactory.createPokedex(any(), any())).thenReturn(pokedex);

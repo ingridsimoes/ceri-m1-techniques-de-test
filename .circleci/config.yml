@@ -12,9 +12,7 @@ jobs:
       - run:
           name: Run Maven Test and generate coverage report
           command: mvn test
-      - run:
-          name: Upload coverage to Codecov
-          command: bash <(curl -fsSL https://codecov.io/bash)
+      # Assuming mvn test generates the coverage reports in a location the codecov orb can find
 
 workflows:
   version: 2
@@ -24,7 +22,9 @@ workflows:
           filters:
             branches:
               only: master
-  upload-to-codecov:
-    jobs:
-      - checkout
-      - codecov/upload
+      - codecov/upload:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master

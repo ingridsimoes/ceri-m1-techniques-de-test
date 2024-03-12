@@ -10,21 +10,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run Maven Test
+          name: Run Maven Test and generate coverage report
           command: mvn test
+      - run:
+          name: Upload coverage to Codecov
+          command: bash <(curl -fsSL https://codecov.io/bash)
 
 workflows:
   version: 2
   complete-workflow:
     jobs:
       - build-and-test:
-          filters:
-            branches:
-              only: master
-      - codecov/upload:
-          context: org-global
-          requires:
-            - build-and-test
           filters:
             branches:
               only: master

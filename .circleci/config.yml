@@ -11,14 +11,20 @@ jobs:
       - checkout
       - run: mvn test
       - store_artifacts:
-          path: target/my-report
+          path: target/site/jacoco
+      - persist_to_workspace:
+          root: .
+          paths:
+            - target/site/jacoco
 
   upload-coverage:
     docker:
       - image: cimg/base:stable
     steps:
-      - checkout
-      - codecov/upload
+      - attach_workspace:
+          at: /tmp/workspace
+      - codecov/upload:
+          file: /tmp/workspace/target/site/jacoco/jacoco.xml
 
 workflows:
   version: 2
@@ -31,6 +37,8 @@ workflows:
   upload-to-codecov:
     jobs:
       - upload-coverage:
+          requires:
+            - build-and-test
           filters:
             branches:
               only: master

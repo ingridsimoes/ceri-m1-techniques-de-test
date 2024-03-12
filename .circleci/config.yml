@@ -9,33 +9,29 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - checkout
-      - run: mvn test
-      - store_artifacts:
-          path: target/site/jacoco
+      - run: mvn test # Make sure this command generates the coverage report
       - persist_to_workspace:
-          root: .
+          root: . # This will save the entire working directory
           paths:
-            - target/site/jacoco
+            - target # Adjust if your path is different
 
   upload-coverage:
     docker:
       - image: cimg/base:stable
     steps:
-      - attach_workspace:
+      - attach_workspace: # This retrieves the workspace saved by the previous job
           at: /tmp/workspace
       - codecov/upload:
-          file: /tmp/workspace/target/site/jacoco/jacoco.xml
+          path: /tmp/workspace/target/site/jacoco # Update the path to where your report is stored
 
 workflows:
   version: 2
-  build-and-test-on-master:
+  build-and-test-and-upload:
     jobs:
       - build-and-test:
           filters:
             branches:
               only: master
-  upload-to-codecov:
-    jobs:
       - upload-coverage:
           requires:
             - build-and-test

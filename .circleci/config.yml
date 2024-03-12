@@ -9,11 +9,11 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - checkout
-      - run: mvn test
+      - run: mvn test # Make sure this command generates the coverage report
       - persist_to_workspace:
           root: .
           paths:
-            - target
+            - target # This will save the target directory where the coverage report is generated
 
   upload-coverage:
     docker:
@@ -21,7 +21,10 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - codecov/upload:
+      - run: # Use this to debug and see if the coverage report exists in the workspace
+          name: List coverage report
+          command: ls -al /tmp/workspace/target/site/jacoco
+      - codecov/upload
 
 workflows:
   version: 2

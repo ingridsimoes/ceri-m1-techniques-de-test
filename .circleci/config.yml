@@ -9,25 +9,28 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - checkout
-      - run:
-          name: Run Maven Test and generate coverage report
-          command: mvn test
-      - persist_to_workspace:  # This will make the coverage reports available to the next job
-          root: .
-          paths:
-            - target/site/jacoco/  # Adjust the path to where your coverage reports are generated
+      - run: mvn test
+      - store_artifacts:
+          path: target/my-report
+
+  upload-coverage:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - codecov/upload
 
 workflows:
   version: 2
-  complete-workflow:
+  build-and-test-on-master:
     jobs:
       - build-and-test:
           filters:
             branches:
               only: master
-      - codecov/upload:
-          requires:
-            - build-and-test
+  upload-to-codecov:
+    jobs:
+      - upload-coverage:
           filters:
             branches:
               only: master

@@ -37,4 +37,41 @@ class IPokemonTrainerFactoryTest {
 
         verify(trainerFactory).createTrainer(trainerName, team, pokedexFactory);
     }
+
+    @Test
+    void testCreateTrainerDifferentTeams() {
+        Team[] teams = Team.values();
+        for (Team team : teams) {
+            PokemonTrainer createdTrainer = trainerFactory.createTrainer("Ash", team, pokedexFactory);
+            assertEquals(team, createdTrainer.getTeam(), "L'équipe du trainer créé devrait correspondre à l'entrée.");
+        }
+    }
+    @Test
+    void testCreateTrainerWithNullName() {
+        assertThrows(IllegalArgumentException.class, () -> trainerFactory.createTrainer(null, Team.MYSTIC, pokedexFactory));
+    }
+
+    @Test
+    void testCreateTrainerWithNullPokedexFactory() {
+        assertThrows(IllegalArgumentException.class, () -> trainerFactory.createTrainer("Ash", Team.MYSTIC, null));
+    }
+    @Test
+    void testCreateMultipleTrainers() {
+        PokemonTrainer trainer1 = trainerFactory.createTrainer("Trainer1", Team.VALOR, pokedexFactory);
+        PokemonTrainer trainer2 = trainerFactory.createTrainer("Trainer2", Team.INSTINCT, pokedexFactory);
+
+        assertNotEquals(trainer1, trainer2, "Chaque appel à createTrainer devrait créer une nouvelle instance de PokemonTrainer.");
+    }
+    @Test
+    void testPokedexCreationForTrainer() {
+        trainerFactory.createTrainer("Ash", Team.MYSTIC, pokedexFactory);
+        verify(pokedexFactory).createPokedex(any(), any());
+    }
+    @Test
+    void testPokedexFactoryExceptionHandling() {
+        when(pokedexFactory.createPokedex(any(), any())).thenThrow(new RuntimeException("Erreur de création de Pokedex"));
+
+        assertThrows(RuntimeException.class, () -> trainerFactory.createTrainer("Ash", Team.MYSTIC, pokedexFactory), "La factory devrait propager l'exception de création de Pokedex.");
+    }
+
 }

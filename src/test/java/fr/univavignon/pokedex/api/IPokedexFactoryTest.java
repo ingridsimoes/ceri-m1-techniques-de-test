@@ -31,4 +31,44 @@ class IPokedexFactoryTest {
 
         verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);
     }
+    @Test
+    void testCreatePokedexWithNullParameters() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            pokedexFactory.createPokedex(null, pokemonFactory);
+        }, "Should throw IllegalArgumentException for null metadataProvider.");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            pokedexFactory.createPokedex(metadataProvider, null);
+        }, "Should throw IllegalArgumentException for null pokemonFactory.");
+    }
+
+    @Test
+    void testCreatePokedexWithNullMetadataProvider() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            pokedexFactory.createPokedex(null, pokemonFactory);
+        }, "Création de IPokedex avec un IPokemonMetadataProvider null devrait lancer une exception.");
+    }
+
+    @Test
+    void testCreatePokedexWithNullPokemonFactory() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            pokedexFactory.createPokedex(metadataProvider, null);
+        }, "Création de IPokedex avec un IPokemonFactory null devrait lancer une exception.");
+    }
+
+    @Test
+    void testInitialStateOfCreatedPokedex() {
+        IPokedex pokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+        assertNotNull(pokedex, "La factory devrait créer une instance non nulle de IPokedex.");
+        assertEquals(0, pokedex.size(), "Un nouveau IPokedex devrait être vide.");
+    }
+
+    @Test
+    void testPokedexFactoryUnderLoad() {
+        for (int i = 0; i < 1000; i++) {
+            IPokedex pokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+            assertNotNull(pokedex, "La factory devrait toujours créer une instance non nulle de IPokedex.");
+        }
+        // Considérez d'ajouter des vérifications spécifiques liées à la performance ou à l'utilisation des ressources ici.
+    }
 }

@@ -52,4 +52,39 @@ class IPokemonMetadataProviderTest {
         assertThrows(PokedexException.class, () -> metadataProvider.getPokemonMetadata(invalidIndex));
     }
 
+    @Test
+    void testGetPokemonMetadata_ValidIndexMew() throws PokedexException {
+        when(metadataProvider.getPokemonMetadata(151)).thenReturn(new PokemonMetadata(151, "Mew", 100, 100, 100));
+
+        PokemonMetadata metadata = metadataProvider.getPokemonMetadata(151);
+
+        assertNotNull(metadata);
+        assertEquals("Mew", metadata.getName());
+    }
+
+    @Test
+    void testGetPokemonMetadata_OutOfRangeHighIndex_ThrowsException() {
+        int outOfRangeIndex = 152; // Supposant que 151 est le max
+
+        assertThrows(PokedexException.class, () -> metadataProvider.getPokemonMetadata(outOfRangeIndex));
+    }
+
+    @Test
+    void testGetPokemonMetadata_OutOfRangeNegativeIndex_ThrowsException() {
+        int negativeIndex = -2; // Tout index négatif est invalide
+
+        assertThrows(PokedexException.class, () -> metadataProvider.getPokemonMetadata(negativeIndex));
+    }
+
+    @Test
+    void testGetPokemonMetadata_ConsistencyOverMultipleCalls() throws PokedexException {
+        PokemonMetadata expectedMetadata = new PokemonMetadata(25, "Pikachu", 112, 96, 111);
+        when(metadataProvider.getPokemonMetadata(25)).thenReturn(expectedMetadata);
+
+        PokemonMetadata firstCall = metadataProvider.getPokemonMetadata(25);
+        PokemonMetadata secondCall = metadataProvider.getPokemonMetadata(25);
+
+        assertEquals(firstCall, secondCall);
+    }
+
 }

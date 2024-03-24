@@ -27,10 +27,9 @@ class IPokedexFactoryTest {
         IPokedex createdPokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
 
         assertNotNull(createdPokedex, "La factory devrait créer une instance de IPokedex non nulle.");
+
         assertEquals(expectedPokedex, createdPokedex, "L'instance de IPokedex créée devrait être celle attendue.");
 
         verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);
     }
-
-
 }

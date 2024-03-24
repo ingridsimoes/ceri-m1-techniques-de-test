@@ -8,31 +8,33 @@ import static org.mockito.Mockito.mock;
 class IPokedexTest {
 
     private IPokedex pokedex;
+    private IPokemonMetadataProvider fournisseurMetadonnees;
+    private IPokemonFactory fabriquePokemon;
 
     @BeforeEach
     void setUp() {
-        IPokemonMetadataProvider metadataProvider = mock(IPokemonMetadataProvider.class);
-        IPokemonFactory pokemonFactory = mock(IPokemonFactory.class);
-        pokedex = new IPokedexImpl(metadataProvider, pokemonFactory);
+        fournisseurMetadonnees = mock(IPokemonMetadataProvider.class);
+        fabriquePokemon = mock(IPokemonFactory.class);
+
+        pokedex = new IPokedexImpl(fournisseurMetadonnees, fabriquePokemon);
     }
 
     @Test
-    void testAddPokemon_Bulbizarre() {
+    void testAjouterPokemon_Bulbizarre() {
         Pokemon bulbizarre = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56);
 
-        int index = pokedex.addPokemon(bulbizarre);
-
-        assertEquals(0, index);
+        int indice = pokedex.addPokemon(bulbizarre);
+        assertEquals(0, indice, "Bulbizarre doit être le premier Pokémon dans le Pokedex.");
     }
 
     @Test
-    void testGetPokemon_Aquali() throws PokedexException {
+    void testObtenirPokemon_Aquali() throws PokedexException {
+        // Création d'Aquali
         Pokemon aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 100);
 
-        pokedex.addPokemon(aquali);
+        int indiceAquali = pokedex.addPokemon(aquali);
 
-        Pokemon result = pokedex.getPokemon(133);
-
-        assertEquals(aquali, result);
+        Pokemon resultat = pokedex.getPokemon(indiceAquali);
+        assertEquals(aquali, resultat, "Le Pokémon récupéré doit être Aquali.");
     }
 }

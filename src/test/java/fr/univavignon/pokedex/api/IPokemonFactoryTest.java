@@ -30,7 +30,7 @@ class IPokemonFactoryTest {
 
         Pokemon BulbasaurAttendu = new Pokemon(index, nom, attaque, defense, endurance, cp, hp, poussiere, bonbon, iv);
 
-        when(pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon)).thenReturn(aqualiAttendu);
+        when(pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon)).thenReturn(BulbasaurAttendu);
 
         Pokemon BulbasaurCree = pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon);
 
@@ -59,6 +59,5 @@ class IPokemonFactoryTest {
 
         assertNotNull(aqualiCree, "Le Pokémon créé ne doit pas être nul.");
         assertEquals(aqualiAttendu, aqualiCree, "Le Pokémon créé doit correspondre à l'instance attendue.");
-    }
     }
 }

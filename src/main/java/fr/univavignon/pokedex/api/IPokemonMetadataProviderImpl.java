@@ -5,35 +5,30 @@ import java.util.Map;
 
 public class IPokemonMetadataProviderImpl implements IPokemonMetadataProvider {
 
-    // Mapa para armazenar metadados de Pokémon com base no índice
+    // Map pour stocker les métadonnées des Pokémon en fonction de leur index
     private final Map<Integer, PokemonMetadata> metadataMap;
 
     public IPokemonMetadataProviderImpl() {
-        // Inicialize o mapa de metadados
         metadataMap = new HashMap<>();
 
-        // Adicione metadados de exemplo para alguns Pokémon
-        metadataMap.put(1, new PokemonMetadata(1, "Bulbasaur", 45, 49, 49));
-        metadataMap.put(2, new PokemonMetadata(2, "Ivysaur", 60, 62, 63));
-        metadataMap.put(3, new PokemonMetadata(3, "Venusaur", 80, 82, 83));
-        // Adicione mais metadados conforme necessário
+        metadataMap.put(0, new PokemonMetadata(0, "Bulbizarre", 45, 49, 49)); // Pour l'index 0 (Bulbizarre)
+        metadataMap.put(133, new PokemonMetadata(133, "Aquali", 186, 168, 260)); // Pour l'index 133 (Aquali)
+
     }
 
-    /**
-     * Retorna os metadados do Pokémon para o índice fornecido.
+    /*
+     * Retourne les métadonnées du Pokémon pour l'index fourni.
      *
-     * @param index Índice do Pokémon.
-     * @return Metadados do Pokémon.
-     * @throws PokedexException Se os metadados não estiverem disponíveis para o índice fornecido.
+     * @param index Index du Pokémon.
+     * @return Métadonnées du Pokémon.
+     * @throws PokedexException Si les métadonnées ne sont pas disponibles pour l'index fourni.
      */
     @Override
     public PokemonMetadata getPokemonMetadata(int index) throws PokedexException {
-        // Verifica se os metadados estão disponíveis para o índice fornecido
         if (!metadataMap.containsKey(index)) {
-            throw new PokedexException("Metadados não encontrados para o índice do Pokémon: " + index);
+            throw new PokedexException("Métadonnées non trouvées pour l'index du Pokémon : " + index);
         }
 
-        // Retorna os metadados do Pokémon para o índice fornecido
         return metadataMap.get(index);
     }
 }

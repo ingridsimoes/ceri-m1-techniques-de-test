@@ -22,14 +22,16 @@ class IPokedexFactoryTest {
     void testCreatePokedex() {
         IPokedex expectedPokedex = mock(IPokedex.class);
 
-        when(pokedexFactory.createPokedex(metadataProvider, pokemonFactory)).thenReturn(expectedPokedex);
+        IPokedexFactory pokedexFactoryMock = mock(IPokedexFactory.class);
 
-        IPokedex createdPokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+        when(pokedexFactoryMock.createPokedex(metadataProvider, pokemonFactory)).thenReturn(expectedPokedex);
+
+        IPokedex createdPokedex = pokedexFactoryMock.createPokedex(metadataProvider, pokemonFactory);
 
         assertNotNull(createdPokedex, "La factory devrait créer une instance de IPokedex non nulle.");
 
         assertEquals(expectedPokedex, createdPokedex, "L'instance de IPokedex créée devrait être celle attendue.");
 
-        verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);
+        verify(pokedexFactoryMock).createPokedex(metadataProvider, pokemonFactory);
     }
 }

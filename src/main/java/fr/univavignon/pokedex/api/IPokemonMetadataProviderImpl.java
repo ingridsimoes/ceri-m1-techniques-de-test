@@ -11,7 +11,7 @@ public class IPokemonMetadataProviderImpl implements IPokemonMetadataProvider {
     public IPokemonMetadataProviderImpl() {
         metadataMap = new HashMap<>();
 
-        metadataMap.put(0, new PokemonMetadata(0, "Bulbizarre", 45, 49, 49)); // Pour l'index 0 (Bulbizarre)
+        metadataMap.put(0, new PokemonMetadata(0, "Bulbizarre", 126, 49, 49)); // Pour l'index 0 (Bulbizarre)
         metadataMap.put(133, new PokemonMetadata(133, "Aquali", 186, 168, 260)); // Pour l'index 133 (Aquali)
 
     }

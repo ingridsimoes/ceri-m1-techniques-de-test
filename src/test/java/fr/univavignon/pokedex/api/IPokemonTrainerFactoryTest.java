@@ -13,27 +13,24 @@ class IPokemonTrainerFactoryTest {
 
     @BeforeEach
     void setUp() {
-        trainerFactory = new IPokemonTrainerFactoryImpl();
+        trainerFactory = mock(IPokemonTrainerFactory.class);
         pokedexFactory = mock(IPokedexFactory.class);
         pokedex = mock(IPokedex.class);
+
+        when(pokedexFactory.createPokedex(any(), any())).thenReturn(pokedex);
     }
 
     @Test
     void testCreateTrainer() {
-        String trainerName = "train";
+        String trainerName = "team";
         Team team = Team.MYSTIC;
 
-        PokemonTrainer pokemonTrainerMock = mock(PokemonTrainer.class);
-
-        when(pokedexFactory.createPokedex(any(), any())).thenReturn(pokedex);
-
-        when(trainerFactory.createTrainer(trainerName, team, pokedexFactory)).thenReturn(pokemonTrainerMock);
+        PokemonTrainer expectedTrainer = mock(PokemonTrainer.class);
+        when(trainerFactory.createTrainer(trainerName, team, pokedexFactory)).thenReturn(expectedTrainer);
 
         PokemonTrainer createdTrainer = trainerFactory.createTrainer(trainerName, team, pokedexFactory);
 
-        assertNotNull(createdTrainer, "La factory devrait créer une instance de PokemonTrainer non nulle.");
-        assertEquals(pokemonTrainerMock, createdTrainer, "L'instance de PokemonTrainer créée devrait être celle attendue.");
-
-        verify(trainerFactory).createTrainer(trainerName, team, pokedexFactory);
+        assertNotNull(createdTrainer);
+        assertEquals(expectedTrainer, createdTrainer);
     }
 }

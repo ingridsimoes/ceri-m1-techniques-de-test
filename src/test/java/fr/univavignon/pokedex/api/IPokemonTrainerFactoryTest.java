@@ -2,8 +2,8 @@ package fr.univavignon.pokedex.api;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class IPokemonTrainerFactoryTest {
 
@@ -13,7 +13,7 @@ class IPokemonTrainerFactoryTest {
 
     @BeforeEach
     void setUp() {
-        trainerFactory = mock(IPokemonTrainerFactory.class);
+        trainerFactory = new IPokemonTrainerFactoryImpl();
         pokedexFactory = mock(IPokedexFactory.class);
         pokedex = mock(IPokedex.class);
     }
@@ -26,6 +26,7 @@ class IPokemonTrainerFactoryTest {
         when(pokedexFactory.createPokedex(any(), any())).thenReturn(pokedex);
 
         PokemonTrainer expectedTrainer = new PokemonTrainer(trainerName, team, pokedex);
+
         when(trainerFactory.createTrainer(trainerName, team, pokedexFactory)).thenReturn(expectedTrainer);
 
         PokemonTrainer createdTrainer = trainerFactory.createTrainer(trainerName, team, pokedexFactory);
@@ -37,7 +38,4 @@ class IPokemonTrainerFactoryTest {
 
         verify(trainerFactory).createTrainer(trainerName, team, pokedexFactory);
     }
-
-
-
 }

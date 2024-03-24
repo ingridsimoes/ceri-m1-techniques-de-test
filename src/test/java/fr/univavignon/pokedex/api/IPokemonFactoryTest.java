@@ -2,7 +2,6 @@ package fr.univavignon.pokedex.api;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IPokemonFactoryTest {
@@ -11,26 +10,23 @@ class IPokemonFactoryTest {
 
     @BeforeEach
     void setUp() {
-        pokemonFactory = mock(IPokemonFactory.class);
+        pokemonFactory = new IPokemonFactoryImpl();
     }
 
     @Test
     void testCreatePokemon_Bulbasaur() {
-        // Provided metadata for Bulbizarre
         int index = 0;
         String name = "Bulbizarre";
-        int attack = 126; // Attaque
-        int defense = 126; // Défense
-        int stamina = 90; // Endurance
-        int cp = 613; // CP
-        int hp = 64; // HP
-        int dust = 4000; // Dust
-        int candy = 4; // Candy
-        int iv = 56; // IV
+        int attack = 126;
+        int defense = 126;
+        int stamina = 90;
+        int cp = 613;
+        int hp = 64;
+        int dust = 4000;
+        int candy = 4;
+        int iv = 56;
 
         Pokemon expectedBulbasaur = new Pokemon(index, name, attack, defense, stamina, cp, hp, dust, candy, iv);
-
-        when(pokemonFactory.createPokemon(index, cp, hp, dust, candy)).thenReturn(expectedBulbasaur);
 
         Pokemon createdBulbasaur = pokemonFactory.createPokemon(index, cp, hp, dust, candy);
 
@@ -42,18 +38,16 @@ class IPokemonFactoryTest {
     void testCreatePokemon_Aquali() {
         int index = 133;
         String name = "Aquali";
-        int attack = 186; // Attaque
-        int defense = 168; // Défense
-        int stamina = 260; // Endurance
-        int cp = 2729; // CP
-        int hp = 202; // HP
-        int dust = 5000; // Dust
-        int candy = 4; // Candy
-        int iv = 100; // IV
+        int attack = 186;
+        int defense = 168;
+        int stamina = 260;
+        int cp = 2729;
+        int hp = 202;
+        int dust = 5000;
+        int candy = 4;
+        int iv = 100;
 
         Pokemon expectedAquali = new Pokemon(index, name, attack, defense, stamina, cp, hp, dust, candy, iv);
-
-        when(pokemonFactory.createPokemon(index, cp, hp, dust, candy)).thenReturn(expectedAquali);
 
         Pokemon createdAquali = pokemonFactory.createPokemon(index, cp, hp, dust, candy);
 

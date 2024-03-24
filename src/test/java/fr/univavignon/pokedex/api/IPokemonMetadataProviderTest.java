@@ -2,7 +2,6 @@ package fr.univavignon.pokedex.api;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IPokemonMetadataProviderTest {
@@ -11,13 +10,11 @@ class IPokemonMetadataProviderTest {
 
     @BeforeEach
     void setUp() {
-        metadataProvider = mock(IPokemonMetadataProvider.class);
+        metadataProvider = new IPokemonMetadataProviderImpl();
     }
 
     @Test
     void testGetPokemonMetadata_ValidIndexBulbasaur() throws PokedexException {
-        when(metadataProvider.getPokemonMetadata(0)).thenReturn(new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
-
         PokemonMetadata metadata = metadataProvider.getPokemonMetadata(0);
 
         assertNotNull(metadata, "Les métadonnées ne devraient pas être null");
@@ -29,8 +26,6 @@ class IPokemonMetadataProviderTest {
 
     @Test
     void testGetPokemonMetadata_ValidIndexAquali() throws PokedexException {
-        when(metadataProvider.getPokemonMetadata(133)).thenReturn(new PokemonMetadata(133, "Aquali", 186, 168, 260));
-
         PokemonMetadata metadata = metadataProvider.getPokemonMetadata(133);
 
         assertNotNull(metadata, "Les métadonnées ne devraient pas être null");

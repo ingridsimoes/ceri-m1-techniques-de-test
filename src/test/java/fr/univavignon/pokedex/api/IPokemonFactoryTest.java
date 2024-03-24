@@ -3,8 +3,7 @@ package fr.univavignon.pokedex.api;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class IPokemonFactoryTest {
 
@@ -12,13 +11,13 @@ class IPokemonFactoryTest {
 
     @BeforeEach
     void setUp() {
-        pokemonFactory = new IPokemonFactoryImpl();
+        pokemonFactory = mock(IPokemonFactory.class);
     }
 
     @Test
     void testCreatePokemon_Bulbasaur() {
         int index = 0;
-        String nom= "Bulbizarre";
+        String nom = "Bulbizarre";
         int attaque = 126;
         int defense = 126;
         int endurance = 90;

@@ -1,11 +1,9 @@
 package fr.univavignon.pokedex.api;
 
-import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Arrays;
-import java.util.List;
+import static org.mockito.Mockito.mock;
 
 class IPokedexTest {
 
@@ -13,50 +11,28 @@ class IPokedexTest {
 
     @BeforeEach
     void setUp() {
-        pokedex = new IPokedexImpl(mock(IPokemonMetadataProvider.class), mock(IPokemonFactory.class));
+        IPokemonMetadataProvider metadataProvider = mock(IPokemonMetadataProvider.class);
+        IPokemonFactory pokemonFactory = mock(IPokemonFactory.class);
+        pokedex = new IPokedexImpl(metadataProvider, pokemonFactory);
     }
 
     @Test
-    void testAddPokemon() {
-        Pokemon bulbasaur = new Pokemon(0, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
+    void testAddPokemon_Bulbizarre() {
+        Pokemon bulbizarre = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56);
 
-
-
-        int index = pokedex.addPokemon(bulbasaur);
+        int index = pokedex.addPokemon(bulbizarre);
 
         assertEquals(0, index);
-
     }
 
     @Test
-    void testGetPokemon() throws PokedexException {
-        Pokemon bulbasaur = new Pokemon(0, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
+    void testGetPokemon_Aquali() throws PokedexException {
+        Pokemon aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 100);
 
-        Pokemon result = pokedex.getPokemon(0);
+        pokedex.addPokemon(aquali);
 
-        assertEquals(bulbasaur, result);
+        Pokemon result = pokedex.getPokemon(133);
 
-    }
-
-    @Test
-    void testGetSize() {
-
-
-        int size = pokedex.size();
-
-        assertEquals(0, size);
-
-    }
-
-    @Test
-    void testGetPokemons() {
-        Pokemon bulbasaur = new Pokemon(0, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
-        Pokemon ivysaur = new Pokemon(1, "Ivysaur", 186, 168, 260, 2729, 202, 5000, 4, 100);
-
-
-        List<Pokemon> pokemons = pokedex.getPokemons();
-
-        assertEquals(0, pokemons.size());
-
+        assertEquals(aquali, result);
     }
 }

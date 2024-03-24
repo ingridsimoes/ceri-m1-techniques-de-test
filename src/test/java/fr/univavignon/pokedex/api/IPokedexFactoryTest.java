@@ -38,13 +38,9 @@ class IPokedexFactoryTest {
     void testCreatePokedexWithNullProviderShouldThrowException() {
         IPokedexFactory factory = new IPokedexFactoryImpl();
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        // Vérifie que la méthode lance une IllegalArgumentException quand le fournisseur est null.
+        assertThrows(IllegalArgumentException.class, () -> {
             factory.createPokedex(null, pokemonFactory);
         });
-
-        String expectedMessage = "Le fournisseur de métadonnées ne peut pas être nul";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

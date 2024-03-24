@@ -37,4 +37,22 @@ class IPokemonTrainerFactoryTest {
 
         verify(trainerFactory).createTrainer(trainerName, team, pokedexFactory);
     }
+
+    @Test
+    void testCreateTrainerDifferentTeams() {
+        Team[] teams = Team.values();
+        assertNotNull(trainerFactory, "trainerFactory is null.");
+        assertNotNull(pokedexFactory, "pokedexFactory is null.");
+
+        for (Team team : teams) {
+            assertNotNull(team, "Team is null."); // This is likely unnecessary but added for thoroughness.
+            PokemonTrainer createdTrainer = trainerFactory.createTrainer("Ash", team, pokedexFactory);
+            assertNotNull(createdTrainer, "Created trainer is null.");
+            assertNotNull(createdTrainer.getTeam(), "Created trainer's team is null.");
+
+            assertEquals(team, createdTrainer.getTeam(), "L'équipe du trainer créé devrait correspondre à l'entrée.");
+        }
+    }
+
+
 }

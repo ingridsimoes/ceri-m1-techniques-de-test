@@ -31,4 +31,5 @@ class IPokedexFactoryTest {
 
         verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);
     }
+
 }

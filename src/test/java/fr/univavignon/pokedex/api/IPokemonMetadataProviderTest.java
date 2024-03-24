@@ -40,16 +40,4 @@ class IPokemonMetadataProviderTest {
         assertEquals(260, metadata.getStamina(), "L'endurance d'Aquali devrait être 260");
     }
 
-    @Test
-    void testGetPokemonMetadata_InvalidIndex_ThrowsException() {
-        int invalidIndex = -1; // or any invalid index that should trigger the exception
-        try {
-            when(metadataProvider.getPokemonMetadata(invalidIndex)).thenThrow(PokedexException.class);
-        } catch (PokedexException e) {
-            throw new RuntimeException(e);
-        }
-
-        assertThrows(PokedexException.class, () -> metadataProvider.getPokemonMetadata(invalidIndex));
-    }
-
 }

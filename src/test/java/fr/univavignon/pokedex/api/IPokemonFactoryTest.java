@@ -3,6 +3,8 @@ package fr.univavignon.pokedex.api;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class IPokemonFactoryTest {
 
@@ -16,42 +18,47 @@ class IPokemonFactoryTest {
     @Test
     void testCreatePokemon_Bulbasaur() {
         int index = 0;
-        String name = "Bulbizarre";
-        int attack = 126;
+        String nom= "Bulbizarre";
+        int attaque = 126;
         int defense = 126;
-        int stamina = 90;
+        int endurance = 90;
         int cp = 613;
         int hp = 64;
-        int dust = 4000;
-        int candy = 4;
+        int poussiere = 4000;
+        int bonbon = 4;
         int iv = 56;
 
-        Pokemon expectedBulbasaur = new Pokemon(index, name, attack, defense, stamina, cp, hp, dust, candy, iv);
+        Pokemon BulbasaurAttendu = new Pokemon(index, nom, attaque, defense, endurance, cp, hp, poussiere, bonbon, iv);
 
-        Pokemon createdBulbasaur = pokemonFactory.createPokemon(index, cp, hp, dust, candy);
+        when(pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon)).thenReturn(aqualiAttendu);
 
-        assertNotNull(createdBulbasaur, "The created Pokemon should not be null.");
-        assertEquals(expectedBulbasaur, createdBulbasaur, "The created Pokemon should match the expected instance.");
+        Pokemon BulbasaurCree = pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon);
+
+        assertNotNull(BulbasaurCree, "Le Pokémon créé ne doit pas être nul.");
+        assertEquals(BulbasaurAttendu, BulbasaurCree, "Le Pokémon créé doit correspondre à l'instance attendue.");
     }
 
     @Test
     void testCreatePokemon_Aquali() {
         int index = 133;
-        String name = "Aquali";
-        int attack = 186;
+        String nom = "Aquali";
+        int attaque = 186;
         int defense = 168;
-        int stamina = 260;
+        int endurance = 260;
         int cp = 2729;
         int hp = 202;
-        int dust = 5000;
-        int candy = 4;
+        int poussiere = 5000;
+        int bonbon = 4;
         int iv = 100;
 
-        Pokemon expectedAquali = new Pokemon(index, name, attack, defense, stamina, cp, hp, dust, candy, iv);
+        Pokemon aqualiAttendu = new Pokemon(index, nom, attaque, defense, endurance, cp, hp, poussiere, bonbon, iv);
 
-        Pokemon createdAquali = pokemonFactory.createPokemon(index, cp, hp, dust, candy);
+        when(pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon)).thenReturn(aqualiAttendu);
 
-        assertNotNull(createdAquali, "The created Pokemon should not be null.");
-        assertEquals(expectedAquali, createdAquali, "The created Pokemon should match the expected instance.");
+        Pokemon aqualiCree = pokemonFactory.createPokemon(index, cp, hp, poussiere, bonbon);
+
+        assertNotNull(aqualiCree, "Le Pokémon créé ne doit pas être nul.");
+        assertEquals(aqualiAttendu, aqualiCree, "Le Pokémon créé doit correspondre à l'instance attendue.");
+    }
     }
 }

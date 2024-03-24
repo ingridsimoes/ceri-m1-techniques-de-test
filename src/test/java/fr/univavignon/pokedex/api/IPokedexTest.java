@@ -20,14 +20,12 @@ class IPokedexTest {
     void testAddPokemon() {
         Pokemon bulbasaur = new Pokemon(0, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
 
-        // Não é mais necessário simular o comportamento, pois estamos usando a implementação real
-        // when(pokedex.addPokemon(bulbasaur)).thenReturn(0);
+
 
         int index = pokedex.addPokemon(bulbasaur);
 
         assertEquals(0, index);
-        // Não é mais necessário verificar as chamadas de método, pois estamos usando a implementação real
-        // verify(pokedex).addPokemon(bulbasaur);
+
     }
 
     @Test
@@ -46,7 +44,7 @@ class IPokedexTest {
 
         int size = pokedex.size();
 
-        assertEquals(0, size); // Aqui você deve ajustar conforme o comportamento esperado do método size()
+        assertEquals(0, size);
 
     }
 

@@ -1,5 +1,6 @@
 package fr.univavignon.pokedex.api;
 
+import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +13,6 @@ class IPokedexTest {
 
     @BeforeEach
     void setUp() {
-        // Criar uma instância de IPokedexImpl
         pokedex = new IPokedexImpl(mock(IPokemonMetadataProvider.class), mock(IPokemonFactory.class));
     }
 
@@ -58,7 +58,7 @@ class IPokedexTest {
 
         List<Pokemon> pokemons = pokedex.getPokemons();
 
-        assertEquals(0, pokemons.size()); // Aqui você deve ajustar conforme o comportamento esperado do método getPokemons()
+        assertEquals(0, pokemons.size());
 
     }
 }

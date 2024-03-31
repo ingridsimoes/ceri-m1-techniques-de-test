@@ -52,7 +52,7 @@ jobs:
           command: |
             git config --global user.email "isfurtado@hotmail.com"
             git config --global user.name "ingridsimoes"
-            git clone https://github.com/ingridsimoes/ceri-m1-techniques-de-test.git repo
+            git clone https://${GH_TOKEN}@https://github.com/ingridsimoes/ceri-m1-techniques-de-test repo
             cd repo
             if git show-ref --verify --quiet refs/heads/gh-pages; then
                git checkout gh-pages

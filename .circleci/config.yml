@@ -52,18 +52,12 @@ jobs:
           command: |
             git config --global user.email "isfurtado@hotmail.com"
             git config --global user.name "ingridsimoes"
-            git clone https://${GH_TOKEN}@https://github.com/ingridsimoes/ceri-m1-techniques-de-test repo
-            cd repo
-            if git show-ref --verify --quiet refs/heads/gh-pages; then
-               git checkout gh-pages
-            else
-               git checkout --orphan gh-pages
-            fi
-            git rm -rf .
-            cp -r ../target/site/apidocs/* .
-            git add .
-            git commit -m "Deploy Javadoc to GitHub Pages" || echo "No changes to commit"
-            git push origin gh-pages
+            mkdir -p docs
+            mvn javadoc:javadoc
+            cp -r target/site/apidocs/* docs/
+            git add docs
+            git commit -m "Update Javadoc documentation [skip ci]" || echo "No changes to commit"
+            git push origin master
 
 
 workflows:

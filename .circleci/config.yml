@@ -7,20 +7,25 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
+      - run:
+          name: Build
+          command: mvn compile
 
   test:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
-      - maven/test
+      - run:
+          name: Run Tests
+          command: mvn test
 
   upload-to-codecov:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
       - run:
@@ -30,7 +35,7 @@ jobs:
 
   generate-javadoc:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
       - run:
@@ -39,7 +44,7 @@ jobs:
 
   deploy-to-gh-pages:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
       - run:
@@ -50,7 +55,7 @@ jobs:
             git clone https://x-access-token:${GH_TOKEN}@github.com/ingridsimoes/ceri-m1-techniques-de-test.git gh-pages
             cd gh-pages
             git checkout gh-pages || git checkout --orphan gh-pages
-            cp -r target/site/apidocs/* .
+            cp -r ../target/site/apidocs/* .
             git add .
             git commit -m "Deploy Javadocs [skip ci]"
             git push origin gh-pages
@@ -60,9 +65,7 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
+      - test
       - upload-to-codecov:
           requires:
             - test
@@ -75,4 +78,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main

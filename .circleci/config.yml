@@ -57,6 +57,7 @@ jobs:
             cp -r target/site/apidocs/* docs/
             git add docs
             git commit -m "Update Javadoc documentation [skip ci]" || echo "No changes to commit"
+            git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/ingridsimoes/ceri-m1-techniques-de-test.git
             git push origin master
 
 

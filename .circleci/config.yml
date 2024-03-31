@@ -16,6 +16,7 @@ jobs:
       - image: cimg/openjdk:21.0.2
     steps:
       - checkout
+      - maven/test
 
   upload-to-codecov:
     docker:
@@ -25,20 +26,53 @@ jobs:
       - run:
           name: "Tests with JaCoCo coverage"
           command: mvn clean verify jacoco:report
-      - run:
-          name: "Upload to Codecov"
-          command: bash <(curl -s https://codecov.io/bash)
       - codecov/upload
 
+  generate-javadoc:
+    docker:
+      - image: cimg/openjdk:21.0.2
+    steps:
+      - checkout
+      - run:
+          name: Generate Javadoc
+          command: mvn javadoc:javadoc
+
+  deploy-to-gh-pages:
+    docker:
+      - image: cimg/openjdk:21.0.2
+    steps:
+      - checkout
+      - run:
+          name: Deploy Javadoc to GitHub Pages
+          command: |
+            git config --global user.email "isfurtado@hotmail.com"
+            git config --global user.name "ingridsimoes"
+            git clone https://x-access-token:${GH_TOKEN}@github.com/ingridsimoes/ceri-m1-techniques-de-test.git gh-pages
+            cd gh-pages
+            git checkout gh-pages || git checkout --orphan gh-pages
+            cp -r target/site/apidocs/* .
+            git add .
+            git commit -m "Deploy Javadocs [skip ci]"
+            git push origin gh-pages
+
 workflows:
-  maven_test:
+  version: 2.1
+  build_and_test:
     jobs:
       - build
-      - maven/test:
+      - test:
+          requires:
+            - build
+      - upload-to-codecov:
+          requires:
+            - test
+      - generate-javadoc:
+          requires:
+            - test
+      - deploy-to-gh-pages:
+          requires:
+            - generate-javadoc
           filters:
             branches:
               only:
                 - master
-      - upload-to-codecov:
-          requires:
-            - maven/test

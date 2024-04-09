@@ -10,3 +10,6 @@
 
 [![codecov](https://codecov.io/gh/ingridsimoes/ceri-m1-techniques-de-test/graph/badge.svg?token=7OQR4335FN)](https://codecov.io/gh/ingridsimoes/ceri-m1-techniques-de-test)
 
+##Checkstyle
+
+[![Checkstyle](docs/badges/checkstyle-result.svg)](https://htmlpreview.github.io/?https://github.com/ingridsimoes/ceri-m1-techniques-de-test/blob/master/target/site/checkstyle.html)

@@ -1,6 +1,6 @@
 # UCE Génie Logiciel Avancé : Techniques de tests
 
-## Ingrid Simoes 
+## Ingrid Simoes - Groupe: M1 IA ALT
 
 ## Circle CI
 
